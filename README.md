@@ -12,6 +12,12 @@ kubectl describe pod <pod-name>
 
 kubectl delete pod <podname>
 
+================
+	DELETING ALL
+================
+kubectl delete all -l <label_key>=label_value
+kubectl delete all -l app=hello-world-rest-api
+
 ==================
 	Getting Events
 ==================
@@ -73,7 +79,11 @@ metadata  : name, labels  (this are direct children of meetadata)  2:23 PODS wit
 name == String
 labels == dictionary
 
-
+=============
+Check LOGS
+=============
+kubectl logs <pod-name> -f    ====> this continuously wait
+kubectl logs <pod-name>  ===> one time output
 
 
 				=============================	
@@ -239,6 +249,15 @@ ONLY DIFFERENCE is kind: Deployment
 	
 	TO see see deployment, rs and pods all at once
 	kubectl get all
+
+	To Get file output
+	========
+	to get yaml output
+	kubectl get deployment hello-world-rest-api -o yaml
+
+    ::::yaml, wide, custom-columns,custom-columns-file,go-template,go-template-file,json,jsonpath,jsonpath-as-json,jsonpath-file,name,template,templatefile
+	
+	WRITE TO OUTPUT :: kubectl get deployment hello-world-rest-api -o yaml > deploymentt.yaml
 	
 	To EDIT
 	========
@@ -298,6 +317,8 @@ ROLLBACK
 ===========
 kubectl rollout undo deployment/<deployment_name>
 kubectl rollout undo deployment.apps/<deployment_name>
+
+kubectl rollout undo deployment <deployment_name> --to-revision=2
 
 	
 
@@ -385,6 +406,15 @@ spec:
 		To check more details
 	=================
 	kubectl describe service <service_name> 
+
+	To Get file output
+	========
+	to get yaml output
+	kubectl get svc hello-world-rest-api -o yaml
+
+    ::::yaml, wide, custom-columns,custom-columns-file,go-template,go-template-file,json,jsonpath,jsonpath-as-json,jsonpath-file,name,template,templatefile
+	
+	WRITE TO OUTPUT :: kubectl get svc hello-world-rest-api -o yaml > service.yaml
 	
 	To Access Services on Host
 	==========================
