@@ -12,6 +12,20 @@ kubectl describe pod <pod-name>
 
 kubectl delete pod <podname>
 
+==================
+	Getting Events
+==================
+kubectl get events --sort-by=.metadata.creationTimestamp
+
+
+COMPONENTS
+kubectl get componentstatuses
+NAME                 STATUS    MESSAGE             ERROR
+scheduler            Healthy   ok								manages where pods are depployed and which node has what space
+etcd-0               Healthy   {"health":"true"}				distributed databases storing all our config
+controller-manager   Healthy   ok								this guy send commands and receive commands from "node agents"
+etcd-1               Healthy   {"health":"true"}
+
 
 Minikube Dashbaord
 ===================
@@ -114,7 +128,7 @@ HOW TO CREATE AND CHECK
 							=============================	
 									REPLICASET - rs
 							============================
-It ensures the number of replica defined is running at all time
+It ensures the number of pods defined is running at all time
 More like it monitors and when any goes down it spins it back up again
 
 HOW TO DEFINE YML file
@@ -204,6 +218,13 @@ then run kubectl replace -f <rs_file_name>.yml
 
 deployment definition.yml file is same as that of REPLICASET
 ONLY DIFFERENCE is kind: Deployment
+	deploy from command line
+	========
+	kubectl create deployment <deployment_name> --image=image_name
+
+	expose from commandline
+	========
+	kubectl expose deployment <deployment_name> --type=LoadBalancer --port=8080
 
 	To Create
 	========
@@ -225,6 +246,11 @@ ONLY DIFFERENCE is kind: Deployment
 
 	Update the existing ReplicaSet and then delete all PODs, 
 	so new ones with the correct image will be created.
+
+	SET IMAGE TO ANOTHER IMAGE
+    ==========================
+	kubectl set image deployment deployment_name container_name=new_image_name
+    container_name === ddeployment_name
 	
 	More Info
 	=========
@@ -294,7 +320,7 @@ Types of Services
 ======
 1. NodePort :-> makes the internal pod port accessible on the node (Node houses pod(s))
 2. ClusterIP :-> the services creates a virtual ip inside the cluster to enable pod in different group talk to each other
-3. Loadbalancer :-> porvisions a load balancer 	e.g distributing load on the frontend tiers
+3. Loadbalancer :-> provisions a load balancer 	e.g distributing load on the frontend tiers
 
 
 
@@ -315,7 +341,7 @@ metadata:
 	name: myapp-service
 	labels:
 		apps: myapp
-		type: frontnd
+		type: front-end
 spec:
 	type: NodePort
 		name: myapp-pod
@@ -338,10 +364,10 @@ TO CONNECT THE SERVICE TO THE POD
 apiVersion: v1
 kind: Pod
 metadata:						
-	name: mmyapp-pod
+	name: myapp-pod
 	labels:
 		app: myapp
-		type: frontnd
+		type: front-end
 spec:
 	containers
 	 - name: nginx-pod
@@ -367,12 +393,12 @@ spec:
 AWESOME PART
 
 Either   
- A single port on a single node
- OR Multiple pod on a single node
- Or multiple pod on multiple nodes   which all have the same label matching that on the service,
+ A single pod in a single node
+ OR Multiple pod in a single node
+ Or multiple pod in multiple nodes   which all have the same label matching that on the service,
  
  K8s creates a service the same way without any additional input from us
- even when pods are removed or extras created, it automatically adapts
+ even when pods are removed or scaled up, it automatically adapts
 
 
 
@@ -420,7 +446,7 @@ spec:
   	=============
 	LOADBALANCER:
 	=============
-Only supported Cloud Platforms like Google cloud, AWS or Azurewe can levergage native load balancer
+Only supported Cloud Platforms like Google cloud, AWS or Azure we can levergage native load balancer
 all we have to do is set the the type of service to LoadBalancer	
 													=============
 if platform is not supported even if we set it to LoadBalancer, it will work as NodePort
@@ -473,3 +499,69 @@ kubectl get pods,svc
 	=============================================
 		Kubernetes On AWS (EKS)
 	=============================================
+=============================================
+Ensure you have aws cli
+also kubectl
+Create an IAM role withe EKS CLuster policy -- https://docs.aws.amazon.com/eks/latest/userguide/service_IAM_role.html
+Create IAM role for Eks Node -- https://docs.aws.amazon.com/eks/latest/userguide/create-node-role.html
+Create key pair -- https://us-west-2.console.aws.amazon.com/ec2/home?region=us-west-2#KeyPairs:sort=keyName
+Then login to aws > search EKS
+create cluster name
+choos custer role created
+use default vpc or create new with subnets where network interfaces will be placed
+Choose Cluster endpoint access
+then create ::: takes some time
+
+	***remember to set  type in client facing service file to LoadBalancer
+	and remove nodePort
+	
+	
+	login via console:  aws eks update-kubeconfig --region us-west-2 --name example-voting-app
+	=========================
+	if reqwuired login with access key found in my security credentials around where username is
+	then
+	aws configure
+	acces key id : ***
+	access secret: ****
+	region :  region you deployed esle it will not work
+	output formaat: 
+	
+	
+	then do kubectl get nodes
+	you can clone repo here
+	the run commands
+	
+	***remember to set  type in client facing service file to LoadBalancer
+	and remove nodePort
+	
+
+	=============================================
+		Kubernetes On AZURE (AKS)
+	=============================================
+	
+	
+	Login to Azure
+	Search AKS
+	
+	Walkthrough: https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough-portal
+	
+	
+	ensure when using this cmd:az aks get-credentials --resource-group myResourceGroup --name myAKSCluster
+	change your resource-group and clustername
+	az aks get-credentials --resource-group azure-resource1 --name example-voting-app
+	
+	***remember to set  type in client facing service file to LoadBalancer
+	and remove nodePort
+	
+	
+	
+	
+							================================
+								SETTING UP KUBEADMIN
+							================================
+1. Multiple system or VMs
+2. install docker on all nodes
+3. install kubeadm on all nodes
+4. initialize one node as admin
+5. int PODNETWORK across all nodes
+6. join worker nodes to admin node
