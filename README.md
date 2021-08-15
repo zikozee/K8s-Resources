@@ -1,4 +1,4 @@
-# K8s-Specification
+# K8s-Resources
 
 https://minikube.sigs.k8s.io/docs/start/
 
