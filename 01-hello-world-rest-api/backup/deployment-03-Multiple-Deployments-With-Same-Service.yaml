@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
@@ -25,13 +25,13 @@ spec:
         version: v1
     spec:
       containers:
-      - image: in28min/hello-world-rest-api:0.0.1.RELEASE
+      - image: zikozee/hello-world-rest-api:0.0.3-SNAPSHOT
         imagePullPolicy: IfNotPresent
         name: hello-world-rest-api
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
@@ -58,7 +58,7 @@ spec:
         version: v2
     spec:
       containers:
-      - image: in28min/hello-world-rest-api:0.0.2.RELEASE
+      - image: zikozee/hello-world-rest-api:0.0.3-SNAPSHOT
         imagePullPolicy: IfNotPresent
         name: hello-world-rest-api
       restartPolicy: Always
@@ -80,5 +80,7 @@ spec:
   selector:
     app: hello-world-rest-api
     version: v1
+    #if we specify version here, it means only v1 will receive traffic else, both v1 and v2 will receive traffic
+    # notice we are not adding version (v1, v2) here. as the label app is the common feature in both deployments
   sessionAffinity: None
   type: LoadBalancer

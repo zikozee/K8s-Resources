@@ -148,6 +148,7 @@ HOW TO CREATE AND CHECK
 							============================
 It ensures the number of pods defined is running at all time
 More like it monitors and when any goes down it spins it back up again
+NOTE: even if we change versions and redeploy no changes are made as rs does not worry about versions only Deployment do
 
 HOW TO DEFINE YML file
 ==============
