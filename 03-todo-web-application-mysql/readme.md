@@ -88,7 +88,7 @@ docker run --detach --env MYSQL_ROOT_PASSWORD=dummypassword --env MYSQL_USER=tod
 Using Link
 
 ```
-docker container run -p 8080:8080 --link=mysql -e RDS_HOSTNAME=mysql  in28min/todo-web-application-mysql:0.0.1-SNAPSHOT
+docker container run -p 8080:8080 --link=mysql -e RDS_HOSTNAME=mysql  zikozee/todo-web-application-mysql:0.0.1-SNAPSHOT
 ```
 
 
