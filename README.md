@@ -14,6 +14,11 @@ kubectl delete pod <podname>
 
 watch n 0.1 <IP>:<PORT>/hello-world
 
+kubectl get deployment [pod] [services] --sort-by=.spec.replicas (we can sourt by any property)
+starting with apiVersion.   kind, metadata., .spec.
+sample .metadata.labels.app ....
+
+
 ================
 	DELETING ALL
 ================

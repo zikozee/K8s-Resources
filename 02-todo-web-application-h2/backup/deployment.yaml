@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
@@ -22,7 +22,7 @@ spec:
         app: todo-web-application-h2
     spec:
       containers:
-      - image: in28min/todo-web-application-h2:0.0.1-SNAPSHOT
+      - image: zikozee/todo-web-application-h2:0.0.1-SNAPSHOT
         imagePullPolicy: IfNotPresent
         name: todo-web-application-h2
       restartPolicy: Always
@@ -37,11 +37,10 @@ metadata:
   namespace: default
 spec:
   ports:
-  - nodePort: 30702
-    port: 8080
+  - port: 8080
     protocol: TCP
     targetPort: 8080
   selector:
     app: todo-web-application-h2
-  sessionAffinity: ClientIP
+  sessionAffinity: ClientIP # this will ensure if port 1 gets the request from user 1, this will stay consistent
   type: LoadBalancer

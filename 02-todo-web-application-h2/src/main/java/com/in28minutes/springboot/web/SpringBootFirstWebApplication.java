@@ -7,7 +7,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan("com.in28minutes.springboot.web")
+//@ComponentScan("com.in28minutes.springboot.web")
 public class SpringBootFirstWebApplication extends SpringBootServletInitializer {
 
 	@Override
