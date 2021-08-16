@@ -12,6 +12,8 @@ kubectl describe pod <pod-name>
 
 kubectl delete pod <podname>
 
+watch n 0.1 <IP>:<PORT>/hello-world
+
 ================
 	DELETING ALL
 ================
@@ -84,6 +86,12 @@ Check LOGS
 =============
 kubectl logs <pod-name> -f    ====> this continuously wait
 kubectl logs <pod-name>  ===> one time output
+
+
+kubectl get pods
+kubectl describe pod <pod_name>
+kubectl delete pod <pod_name>
+WRITE TO OUTPUT :: kubectl get pod <pod_name> -o yaml > pod.yaml
 
 
 				=============================	
@@ -277,7 +285,18 @@ ONLY DIFFERENCE is kind: Deployment
 	
 	To delete
 	========
-	kubectl delete deployments	<deployment_name>			
+	kubectl delete deployments	<deployment_name>	
+
+
+	See Difference from a new deployment to an existing deployment
+	======================================
+	kubectl diff -f <deployment_name>.yaml
+
+
+	Quick Fix to Reduce release downtime
+    =========================================
+	Under spec: 
+		set a parameter minReadySeconds: 45					:::: so that the pods are given a chance to start up
 
 
 =====================================
