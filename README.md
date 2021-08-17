@@ -673,3 +673,4 @@ uid: a1ce1733-adc2-46e2-98d5-fe0f5b798944
 					=============================================
 
 kubectl create secret generic todo-web-application-secrets --from-literal=RDS_PASSWORD=dummytodos
+
