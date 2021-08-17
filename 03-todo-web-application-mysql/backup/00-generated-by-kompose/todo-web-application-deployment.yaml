@@ -30,7 +30,11 @@ spec:
               key: RDS_HOSTNAME
               name: todo-web-application-config
         - name: RDS_PASSWORD
-          value: dummytodos
+          #value: dummytodos
+          valueFrom:
+            secretKeyRef:
+              key: RDS_PASSWORD
+              name: todo-web-application-secrets
         - name: RDS_PORT
           #value: "3306"
           valueFrom:

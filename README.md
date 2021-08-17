@@ -294,6 +294,7 @@ ONLY DIFFERENCE is kind: Deployment
 	To delete
 	========
 	kubectl delete deployments	<deployment_name>	
+   kubectl delete -f a.yaml,b.yaml,c.yaml,d.yaml,eyaml
 
 
 	See Difference from a new deployment to an existing deployment
@@ -372,6 +373,7 @@ Types of Services
 3. Loadbalancer :-> provisions a load balancer 	e.g distributing load on the frontend tiers
 
 
+*** when changing from LoadBalancer to ClusterIP, delete the service first and then recreate as cluster-ip
 
 	==========
 	NODE PORT:
@@ -653,10 +655,10 @@ sample   --> kubectl edit configmap <name_of_config_map>
 =======
 apiVersion: v1
 data:
-RDS_DB_NAME: todos				******
-RDS_HOSTNAME: mysql             ******
-RDS_PORT: "3306"				******
-RDS_USERNAME: todos-user		******
+  RDS_DB_NAME: todos				******
+  RDS_HOSTNAME: mysql             ******
+  RDS_PORT: "3306"				******
+  RDS_USERNAME: todos-user		******
 kind: ConfigMap
 metadata:
 creationTimestamp: "2021-08-17T17:28:43Z"
@@ -670,4 +672,4 @@ uid: a1ce1733-adc2-46e2-98d5-fe0f5b798944
 							USING SECRETS WITH KUBERNETES   
 					=============================================
 
-
+kubectl create secret generic todo-web-application-secrets --from-literal=RDS_PASSWORD=dummytodos
