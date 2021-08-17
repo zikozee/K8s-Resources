@@ -537,6 +537,9 @@ kubectl get pods,svc
 		==================================
 		
 		kubectl create -f .
+
+OR MULTIPLE FILE TOGETHER
+   kubectl create -f a.yaml,b.yaml,c.yaml
 		
 	===================================================
 	ON Google cloud platofrom(GCP) (Google Kubernetes EngineGKE)
@@ -620,3 +623,10 @@ then create ::: takes some time
 4. initialize one node as admin
 5. int PODNETWORK across all nodes
 6. join worker nodes to admin node
+
+
+
+						========================================
+							Converting docker-compose to a k8s deployment config
+						========================================
+https://kompose.io
