@@ -89,7 +89,7 @@ labels == dictionary
 =============
 Check LOGS
 =============
-kubectl logs <pod-name> -f    ====> this continuously wait
+kubectl logs <pod-name> -f    ====> to follow the log
 kubectl logs <pod-name>  ===> one time output
 
 
@@ -219,6 +219,8 @@ the defined in the selector
 =================
 	HOW TO SCALE <depending on the replicas provided, we might be scaling up or down>
 =================
+**** Scaling can be used as a form of restart too
+
 1.
 edit the replicas key to say from 3 to 6
 replicas: 6
@@ -303,6 +305,7 @@ ONLY DIFFERENCE is kind: Deployment
     =========================================
 	Under spec: 
 		set a parameter minReadySeconds: 45					:::: so that the pods are given a chance to start up
+
 
 
 =====================================
@@ -630,3 +633,41 @@ then create ::: takes some time
 							Converting docker-compose to a k8s deployment config
 						========================================
 https://kompose.io
+
+
+					=============================================
+					PERSISTENT VOLUME and PERSISTENT VOLUME CLAIM
+					=============================================
+To access a volume in  a cluster we use persistent volume: pv
+For pods to access the pv, they use the persistent volume claim pvc
+
+
+					=============================================
+							CONFIG MAPS iN KUBERNETES   
+					=============================================
+kubectl create configmap <name_of_config_map>  --from-literal=<KEY>=<VALUE>
+kubectl get configmap <name_of_config_map>
+kubectl describe configmap <name_of_config_map>
+
+sample   --> kubectl edit configmap <name_of_config_map>
+=======
+apiVersion: v1
+data:
+RDS_DB_NAME: todos				******
+RDS_HOSTNAME: mysql             ******
+RDS_PORT: "3306"				******
+RDS_USERNAME: todos-user		******
+kind: ConfigMap
+metadata:
+creationTimestamp: "2021-08-17T17:28:43Z"
+name: todo-web-application-config
+namespace: default
+resourceVersion: "85093"
+uid: a1ce1733-adc2-46e2-98d5-fe0f5b798944
+
+					
+					=============================================
+							USING SECRETS WITH KUBERNETES   
+					=============================================
+
+
