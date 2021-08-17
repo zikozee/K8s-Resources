@@ -674,3 +674,37 @@ uid: a1ce1733-adc2-46e2-98d5-fe0f5b798944
 
 kubectl create secret generic todo-web-application-secrets --from-literal=RDS_PASSWORD=dummytodos
 
+
+
+					==============================================
+						SERVICE DISCOVERY IN KUBRNETES
+					==============================================
+we can configure a name as metadata : say currency-conversion
+and we can den do CURRENCY_CONVERSION_SERVICE_HOST as kubenetes creates it automatically
+but don't use this
+
+
+rather we use service name as this is always constant hence we can map this as an environment variable under 
+containers for services that will call it
+
+lecture 57 KUBERNETES, step 08 3:39
+
+hear we are mapping in currency-conversion  which calls currency-exchange
+env:
+- name: <ENV_VARIABLE_EXPECTED>
+- balue: http://<service-name>
+
+
+				==================================
+					INGRESS LOAD BALANCER
+				==================================
+Take for instance we have 2 or more services running for 2 or more microservices
+it means we will have to create 2 or more services with load balancers (if the microservices are internet facing)
+This is alot loadbalancer 
+instead we can create a single LoadBalancer called ingress which will can configure its redirection based on path
+This way we can convert our services from LoadBalancers to NodePorts
+                          =========================================
+
+e.g look at project 05-currency-conversion-microservce-basic
+and example the ingress.yaml 
+you see how the paths are cleanly configured for the currency-conversion and currency-exchange microservice

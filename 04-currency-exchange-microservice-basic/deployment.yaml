@@ -60,7 +60,7 @@ metadata:
   name: currency-exchange
   namespace: default
 spec:
-  type: LoadBalancer
+  type: NodePort
   ports:
   - # nodePort: 30702 #CHANGE
     port: 8000 #CHANGE

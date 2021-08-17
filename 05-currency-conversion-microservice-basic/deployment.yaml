@@ -26,8 +26,8 @@ spec:
         imagePullPolicy: IfNotPresent
         name: currency-conversion
         env:
-          - name: CURRENCY_EXCHANGE_URI
-            value: http://currency-exchange
+          - name: CURRENCY_EXCHANGE_URI # using it in feign client automatically as an env variable
+            value: http://currency-exchange # currency exchange service name
 #          - name: SPRING_PROFILES_ACTIVE
 #            value: kubernetes
       restartPolicy: Always
@@ -41,7 +41,7 @@ metadata:
   name: currency-conversion
   namespace: default
 spec:
-  type: LoadBalancer
+  type: NodePort
   ports:
   - # nodePort: 30701 #CHANGE
     port: 8100 #CHANGE
