@@ -98,7 +98,9 @@ kubectl describe pod <pod_name>
 kubectl delete pod <pod_name>
 WRITE TO OUTPUT :: kubectl get pod <pod_name> -o yaml > pod.yaml
 
-
+CHECK LOADS CONSUMED BY PODS
+kubectl top pods   ::::::::::::: JSON
+kubectl top pods --use-protocol-buffers  ::::::::::::: protocol-buffers
 				=============================	
 					REPLICATION CONTROLLER
 				============================
@@ -715,3 +717,81 @@ This way we can convert our services from LoadBalancers to NodePorts
 e.g look at project 05-currency-conversion-microservce-basic
 and example the ingress.yaml 
 you see how the paths are cleanly configured for the currency-conversion and currency-exchange microservice
+
+
+				========================================
+					USING RBAC TO ALLOW ACCESS SERVICE DISCOVERY
+				========================================
+see 02.rbac.yaml in 06-currency-conversion-microservice-cloud
+we only enabled view access
+
+				
+				==========================================
+					USING SPRING CLOUD KUBERNETES CONFIG TO LOAD CONFIG MAPS
+				==========================================
+remember we added the dependency for k8s to the 06-currency-conversion-microservice-cloud
+the application/microservice will then by default be looking configmap and secret map based on the name you set
+															 ====================
+as  the application name e.g currency-conversion
+so we can do the below
+
+kubectl create configmap currency-conversion --from-literal=YOUR_PROPERTY=value --from-literal=YOUR_PROPERTY_2=value2
+
+
+This was tested in mysql 06-..-k8s-configmap project,
+removed all the read from configmap defined in deployment file
+set spring.application.name=todo-web-application
+kubectl create configmap --from-literal=RDS_DB_NAME=todos --from-literal=RDS_HOSTNAME=mysql  --from-literal=RDS_PASSWORD=dummytodos   --from-literal=RDS_PORT="3306" --from-literal=RDS_USERNAME=todos-user
+we can define all the property in the config map, add kubernetes config and it will be picked up automatically
+this was picked up automatically
+TEST THIS OUT
+
+				
+				========================
+					AUTO SCALING
+				========================
+1 cluster autoscaling
+first increase number of nodes(server)
+
+	gcloud container clusters create example-cluster \
+	--zone us-central1-a \
+	--node-locations us-central1-a,us-central1-b,us-central1-f \
+	--num-nodes 2 --enable-autoscaling --min-nodes 1 --max-nodes 4
+
+2 horizontal pod auto-scaling
+another option: increase number of pods on high demands:    (only if resources are available)
+kubectl autoscale deployment currency-exchange-service --max=3 --min=1 --cpu-percent=70
+
+this means auto scale deployment for currency-exchange-service to go all the way to 3pods if the cpu utilization is 
+greater than 70 percent 
+SAMPLE  04-.. project we reconfigured the deployment.yaml
+we also copied out the format of hpa using
+kubectl get hpa currency-exchange -o yaml > 01-hpa.yaml
+
+
+3 vertical pod auto-scaling
+increasing amount of cpu/memory allocated to pod: increasing memory of pod
+
+    1- Available in version 1.14.7-gke.10 or higher and in 1.15.4-gke.15 or higher
+   #### Enable on Cluster
+	gcloud container clusters create [CLUSTER_NAME] --enable-vertical-pod-autoscaling --cluster-version=1.14.7
+	gcloud container clusters update [CLUSTER-NAME] --enable-vertical-pod-autoscaling
+
+	2 #### Configure and setup VPA
+	apiVersion: autoscaling.k8s.io/v1
+	kind: VerticalPodAutoscaler
+	metadata:
+	  name: currency-exchange-vpa
+	spec:
+	  targetRef:
+	    apiVersion: "apps/v1"
+	    kind:       Deployment
+	    name:       currency-exchange
+	  updatePolicy:
+	    updateMode: "Off"   ###### set to Auto  to auto-scale up or auto scale down
+	```
+
+	3 #### Get Recommendations
+	kubectl get vpa currency-exchange-vpa --output yaml
+    scale based on recommendatation or just set to updateMode to Auto in VPA
+
