@@ -694,6 +694,13 @@ env:
 - name: <ENV_VARIABLE_EXPECTED>
 - balue: http://<service-name>
 
+Hence On using Ribbon CLient for LoadBalancing,
+we updated to use ribbon rather than feign clients
+and we have just set the name directly in the kuberntes deployment file
+name: currency-conversion
+as ribbon takes care of it
+
+
 
 				==================================
 					INGRESS LOAD BALANCER
