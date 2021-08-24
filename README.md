@@ -351,9 +351,24 @@ kubectl rollout undo deployment.apps/<deployment_name>
 
 kubectl rollout undo deployment <deployment_name> --to-revision=2
 
-	
+  =============
+  MIRRORING AND CANARY
+  ========
+File 09-.../ 11-istio.../ 05-helloworld-mirroring.yaml
+Another way to do a release version
+so if we have a v1 already in production,
+we can mirror traffic to a v2  though while 100 weight still goes to v1 inorder to ensure that v2 is performing as
+expected
+Once this is done and we are sure,
+we can remove the mirror property and direct all traffic to v2
 
-	
+this is also fine incase we have so meny instances and rolling update is not suitbale
+
+CANARY:: once we are sure that Mirroring is fine, we can then implement canary
+To ensure output/response is not affected :::File 09-.../ 11-istio.../ 05-helloworld-canary.yaml
+
+
+
 					
 					=======================
 							SERVICES --svc
@@ -812,6 +827,8 @@ from which you can see all traces
 see trace list and monitor down to method being called in controller clas
 click on any of the requests to see how it trickles down
 
+IN CASE WE ARE NOT USING GCP as demonstrated in 09/10  we added dependencies 
+opentracing-spring-cloud-starter and jaeger-tracerresolver
 				================
 				ERROR REPORTING
 				================
@@ -845,4 +862,6 @@ kubectl label namespace default istio-injection=enabled    ::::::: This ensures 
 
 we need deploy a gateway on the sidecar where the traffic will route through the pod
 and we need create a virtual service    --02/03 of the 09 project under 11-istio
+
+
 
