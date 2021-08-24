@@ -795,3 +795,37 @@ increasing amount of cpu/memory allocated to pod: increasing memory of pod
 	kubectl get vpa currency-exchange-vpa --output yaml
     scale based on recommendatation or just set to updateMode to Auto in VPA
 
+
+				======================
+						TRACING
+                ======================
+Add dependencies as shown in 07 and 08 
+remember to add sleuth which gives unique id
+
+on GCP (Google cloud platform)
+enable all stack driver (except error logging)
+remember naming convention is now different
+logging, tracing, monitoring, stackDriver APi
+
+Under Monioring.  right hand corner, click trace
+from which you can see all traces
+see trace list and monitor down to method being called in controller clas
+click on any of the requests to see how it trickles down
+
+				================
+				ERROR REPORTING
+				================
+enabled by default
+search error reporting
+we can see all error occurring in the application
+once we resolve we can change the status to resolved
+
+				===============
+				Logging
+				===============
+We can check workloads in GKE
+pick a service, select container logs
+pick and id and search (clear filter and just paste an id )
+
+trace id always remain the same across all microservices
+however, span id, beside it changes as it moves from one microservice to another
