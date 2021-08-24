@@ -821,7 +821,7 @@ we can see all error occurring in the application
 once we resolve we can change the status to resolved
 
 				===============
-				Logging
+				   LOGGING
 				===============
 We can check workloads in GKE
 pick a service, select container logs
@@ -829,3 +829,20 @@ pick and id and search (clear filter and just paste an id )
 
 trace id always remain the same across all microservices
 however, span id, beside it changes as it moves from one microservice to another
+
+
+				===============
+					ISTIO
+				===============
+Service Mesh ->> Having another container called Side Car that handles all the common functionalities to the 
+microservices in a pod
+Istio is a popular side mesh
+
+INSTALLATION
+============
+https://istio.io/latest/docs/setup/getting-started/
+kubectl label namespace default istio-injection=enabled    ::::::: This ensures that istio sideCar is injected in every pod
+
+we need deploy a gateway on the sidecar where the traffic will route through the pod
+and we need create a virtual service    --02/03 of the 09 project under 11-istio
+
