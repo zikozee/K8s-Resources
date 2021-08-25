@@ -1,0 +1,5 @@
+image: zikozee/currency-conversion:0.0.2-RELEASE
+port: 8100
+servicetype: LoadBalancer
+replicas: 1
+name: currency-conversion
