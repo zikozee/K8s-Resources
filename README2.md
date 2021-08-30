@@ -462,7 +462,7 @@ kubectl get secret/todo-web-application-secrets
 kubectl describe secret/todo-web-application-secrets
 kubectl apply -f todo-web-application-deployment.yaml 
 
-kubectl delete -f mysql-database-data-volume-persistentvolumeclaim.yaml,mysql-deployment.yaml,mysql-service.yaml,todo-web-application-deployment.yaml,todo-web-application-service.yaml
+kubectl delete -f mysql-database-data-volume-persistentvolumeclaim-aws.yaml,mysql-deployment.yaml,mysql-service.yaml,todo-web-application-deployment.yaml,todo-web-application-service.yaml
 
 apiVersion: v1
 data:

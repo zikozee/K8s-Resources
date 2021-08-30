@@ -27,7 +27,7 @@ spec:
         name: currency-conversion
         env:
           - name: CURRENCY_EXCHANGE_URI # using it in feign client automatically as an env variable
-            value: http://currency-exchange # currency exchange service name
+            value: http://currency-exchange # currency exchange service name i.e IP http://<IP>
 #          - name: SPRING_PROFILES_ACTIVE
 #            value: kubernetes
       restartPolicy: Always
