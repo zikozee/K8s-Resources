@@ -625,7 +625,7 @@ kubectl create deployment todowebapp-h2 --image=in28min/todo-web-application-h2:
 kubectl expose deployment todowebapp-h2 --type=LoadBalancer --port=8080
 git clone https://github.com/in28minutes/kubernetes-crash-course.git
 cd 03-todo-web-application-mysql/backup/02-final-backup-at-end-of-course
-kubectl apply -f mysql-database-data-volume-persistentvolumeclaim.yaml,mysql-deployment.yaml,mysql-service.yaml
+kubectl apply -f mysql-database-data-volume-persistentvolumeclaim[-aws].yaml,mysql-deployment.yaml,mysql-service.yaml
 kubectl apply -f config-map.yaml,secret.yaml,todo-web-application-deployment.yaml,todo-web-application-service.yaml
 kubectl delete all -l app=hello-world-rest-api
 kubectl delete all -l app=todowebapp-h2

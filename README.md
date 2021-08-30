@@ -362,7 +362,7 @@ expected
 Once this is done and we are sure,
 we can remove the mirror property and direct all traffic to v2
 
-this is also fine incase we have so meny instances and rolling update is not suitbale
+this is also fine in-case we have so many instances and rolling update is not suitable
 
 CANARY:: once we are sure that Mirroring is fine, we can then implement canary
 To ensure output/response is not affected :::File 09-.../ 11-istio.../ 05-helloworld-canary.yaml
@@ -587,7 +587,7 @@ Create IAM role for Eks Node -- https://docs.aws.amazon.com/eks/latest/userguide
 Create key pair -- https://us-west-2.console.aws.amazon.com/ec2/home?region=us-west-2#KeyPairs:sort=keyName
 Then login to aws > search EKS
 create cluster name
-choos custer role created
+choose cluster role created
 use default vpc or create new with subnets where network interfaces will be placed
 Choose Cluster endpoint access
 then create ::: takes some time
@@ -725,7 +725,7 @@ as ribbon takes care of it
 Take for instance we have 2 or more services running for 2 or more microservices
 it means we will have to create 2 or more services with load balancers (if the microservices are internet facing)
 This is alot loadbalancer 
-instead we can create a single LoadBalancer called ingress which will can configure its redirection based on path
+instead we can create a single LoadBalancer called ingress which we can configure its redirection based on path
 This way we can convert our services from LoadBalancers to NodePorts
                           =========================================
 
@@ -744,7 +744,7 @@ we only enabled view access
 				==========================================
 					USING SPRING CLOUD KUBERNETES CONFIG TO LOAD CONFIG MAPS
 				==========================================
-remember we added the dependency for k8s to the 06-currency-conversion-microservice-cloud
+remember we added the dependency for k8s to the 06-currency-conversion-microservice-cloud pom
 the application/microservice will then by default be looking configmap and secret map based on the name you set
 															 ====================
 as  the application name e.g currency-conversion

@@ -20,7 +20,7 @@ Prerequisites
 Help for eksctl https://eksctl.io/
 
 ```
-eksctl create cluster --name in28minutes-cluster --nodegroup-name in28minutes-cluster-node-group  --node-type t2.medium --nodes 3 --nodes-min 3 --nodes-max 7 --managed --asg-access
+eksctl create cluster --name zikozee-cluster2 --nodegroup-name zikozee-cluster-node-group  --node-type t2.medium --nodes 3 --nodes-min 3 --nodes-max 7 --managed --asg-access --zones=us-west-2
 ```
 
 If you get this error
@@ -38,6 +38,9 @@ Add Availability Zones
 ```
 --zones=us-east-1a,us-east-1b
 ```
+
+DELETING CLUSTER
+eksctl delete cluster --region=us-east-1 --name=zikozee-cluster
 
 Things to Note
 - VPCs and SubNets are Created
