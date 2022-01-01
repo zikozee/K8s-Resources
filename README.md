@@ -1,3 +1,4 @@
+don't use capital letter as project name when building docker file
 # K8s-Resources
 
 https://minikube.sigs.k8s.io/docs/start/
@@ -18,6 +19,11 @@ kubectl get deployment [pod] [services] --sort-by=.spec.replicas (we can sourt b
 starting with apiVersion.   kind, metadata., .spec.
 sample .metadata.labels.app ....
 
+
+NOTE
+=========
+**matchLabels** in selector, and the labels in metadata are used for matching
+it tells deployments this are the containers you will be creating
 
 ================
 	DELETING ALL
@@ -171,7 +177,7 @@ spec:
 		metadata:					::::: for the pod
 			name: myapp-pod
 			labels:
-				type: front-end			:::: labels key "type" and "value" used here must be same inlabels of rs (**match1**)
+				type: front-end			:::: labels key "type" and "value" used here must be same in labels of rs (**match1**)
 		spec:
 			containers:
 				- name: nginx-container
@@ -414,7 +420,7 @@ spec:
 	type: NodePort
 		name: myapp-pod
 	ports:						:::: This is an array so we can have many pod mapping
-		- targetPort: 80		port on the pod if omiited, value of port is used
+		- targetPort: 80		port on the pod if omitted, value of port is used
 		  port: 80			::: Mandatory  service port
 		  nodePort: 30008		::: can be ommited then a free port is used
 	Selector:
@@ -697,7 +703,7 @@ kubectl create secret generic todo-web-application-secrets --from-literal=RDS_PA
 						SERVICE DISCOVERY IN KUBRNETES
 					==============================================
 we can configure a name as metadata : say currency-conversion
-and we can den do CURRENCY_CONVERSION_SERVICE_HOST as kubenetes creates it automatically
+and we can then do CURRENCY_CONVERSION_SERVICE_HOST as kubenetes creates it automatically
 but don't use this
 
 
@@ -709,7 +715,7 @@ lecture 57 KUBERNETES, step 08 3:39
 hear we are mapping in currency-conversion  which calls currency-exchange
 env:
 - name: <ENV_VARIABLE_EXPECTED>
-- balue: http://<service-name>
+- value: http://<service-name>
 
 Hence On using Ribbon CLient for LoadBalancing,
 we updated to use ribbon rather than feign clients

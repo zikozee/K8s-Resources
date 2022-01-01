@@ -1,0 +1,113 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-master
+  labels:
+    name: redis-master
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: redis-master
+    spec:
+      containers:
+        - image: redis
+          name: master-redis-xfusion
+          ports:
+            - containerPort: 6379
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+  selector:
+    matchLabels:
+      name: redis-master
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-master
+spec:
+  ports:
+    - port: 6379
+      targetPort: 6379
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-slave
+  labels:
+    name: redis-slave
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        name: redis-slave
+    spec:
+      containers:
+      - env:
+        - name: GET_HOSTS_FROM
+          value: dns
+        image: gcr.io/google_samples/gb-redisslave:v3
+        name: slave-redis-xfusion
+        ports:
+         - containerPort: 6379
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+
+  selector:
+    matchLabels:
+      name: redis-slave
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-slave
+spec:
+  ports:
+    - port: 6379
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  labels:
+    name: frontend
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        name: frontend
+    spec:
+      containers:
+        - env:
+          - name: GET_HOSTS_FROM
+            value: dns
+          image: gcr.io/google-samples/gb-frontend:v4
+          name: php-redis-xfusion
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+
+  selector:
+    matchLabels:
+      name: frontend
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      nodePort: 30009
+
