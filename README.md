@@ -15,7 +15,7 @@ kubectl delete pod <podname>
 
 watch n 0.1 <IP>:<PORT>/hello-world
 
-kubectl get deployment [pod] [services] --sort-by=.spec.replicas (we can sourt by any property)
+kubectl get deployment [pod] [services] --sort-by=.spec.replicas (we can sort by any property)
 starting with apiVersion.   kind, metadata., .spec.
 sample .metadata.labels.app ....
 
@@ -110,7 +110,7 @@ Deployment ====> apps/v1
 kind   -->POD, Service, ReplicaSet, Deployment
 ====
 
-metadata  : name, labels  (this are direct children of meetadata)  2:23 PODS with YAML
+metadata  : name, labels  (these are direct children of metadata)  2:23 PODS with YAML
 ========
 name == String
 labels == dictionary
@@ -130,6 +130,11 @@ WRITE TO OUTPUT :: kubectl get pod <pod_name> -o yaml > pod.yaml
 CHECK LOADS CONSUMED BY PODS
 kubectl top pods   ::::::::::::: JSON
 kubectl top pods --use-protocol-buffers  ::::::::::::: protocol-buffers
+
+
+## FILTER PODS 
+	kubectl get pods  -l <LABEL_KEY>=<LABEL_VALE>
+
 				=============================	
 					REPLICATION CONTROLLER
 				============================

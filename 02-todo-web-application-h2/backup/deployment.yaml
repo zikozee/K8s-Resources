@@ -42,5 +42,5 @@ spec:
     targetPort: 8080
   selector:
     app: todo-web-application-h2
-  sessionAffinity: ClientIP # this will ensure if port 1 gets the request from user 1, this will stay consistent
+  sessionAffinity: ClientIP # this will ensure if pod 1 gets the request from user 1, this will stay consistent. so that user session is not lost
   type: LoadBalancer
