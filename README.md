@@ -20,10 +20,33 @@ starting with apiVersion.   kind, metadata., .spec.
 sample .metadata.labels.app ....
 
 
-NOTE
+NOTE: MATCH-LABELS
 =========
 **matchLabels** in selector, and the labels in metadata are used for matching
-it tells deployments this are the containers you will be creating
+it tells deployments: these are the containers you will be creating
+
+	matchLabel: tells what pods the deployment will apply to.
+
+	### USE-CASE
+	============
+	deploy to different versions say **label.version: v1** and **label.version: v2**
+	see 01-hello-world-rest-api\backup\deployment-10-at-end-of-course.yaml
+	then use service to navigate between the two
+
+
+
+### NAMESPACE
+=========
+Namespaces are a way to divide cluster resources between multiple users
+kubectl get pods[svc][deployments] --namespace=<insert-namespace-name-here>
+
+It is not necessary to use multiple namespaces to separate slightly different resources, s
+uch as different versions of the same software: use labels to distinguish resources within the same namespace
+
+
+strategy
+	rollingUpdate.maxSurge ::: total available when updating-deployment
+	rollingUpdate.maxUnavailable :: total unavailable when updating-deployment
 
 ================
 	DELETING ALL
@@ -315,7 +338,9 @@ ONLY DIFFERENCE is kind: Deployment
 	Under spec: 
 		set a parameter minReadySeconds: 45					:::: so that the pods are given a chance to start up
 
-
+	minReadySeconds: The minimum number of seconds required by pod before interacting with it on deployment
+	i.e spec:
+		  minReadySeconds: 45
 
 =====================================
 	UPDATE AND ROLLBACK
