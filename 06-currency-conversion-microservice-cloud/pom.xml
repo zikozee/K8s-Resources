@@ -144,7 +144,6 @@
 				<configuration>
 					<repository>zikozee/${project.name}</repository>
 					<tag>${project.version}</tag>
-					<skipDockerInfo>true</skipDockerInfo>
 				</configuration>
 			</plugin>
 		</plugins>

@@ -6,7 +6,7 @@ metadata:
   name: currency-conversion
   namespace: default
 spec:
-  replicas: 2
+  replicas: 1
   minReadySeconds: 45
   selector:
     matchLabels:

@@ -53,3 +53,31 @@ docker push @@@REPO_NAME@@@/currency-conversion:0.0.1-SNAPSHOT
                 key: CURRENCY_EXCHANGE_URI
                 name: currency-exchange-uri-demo
 ```
+
+### KUBERNETES CLIENT SIDE LOAD BALANCING
+- ```html
+        <dependency> <!-- CHANGE ::: LoadBalancing-->
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+        </dependency>
+
+        <dependency> <!-- CHANGE spring Kubernetes-->
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-kubernetes-all</artifactId>
+        </dependency>
+
+  ```
+- we use feign client in conjuction with ribbon client
+- ```java
+    @FeignClient(name = "currency-exchange")//Kubernetes Service Name
+    @RibbonClient(name = "currency-exchange")
+  ```
+  
+- to fix: Forbibben!Configured service account doesn't access
+- we use 02-rbac.yaml
+
+### BENEFIT OF SPRING_CLOUD_KUBERNETES dependency
+
+- it integrates with config map and secrets which has the same name as the application name
+- so if we have new properties added to the application, we only need add those values to the config-map or secrets 
+- and it is picked up at startup

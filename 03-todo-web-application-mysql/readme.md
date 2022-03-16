@@ -1,3 +1,6 @@
+## commanda
+kompose convert  ::: run where docker-compose is located
+
 # Todo Web Application using Spring Boot and MySQL as Database
 
 Run com.in28minutes.springboot.web.SpringBootFirstWebApplication as a Java Application.
